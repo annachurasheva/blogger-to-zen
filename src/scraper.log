@@ -1,0 +1,83 @@
+2026-03-28 08:32:14,073 - INFO - Scraper started
+2026-03-28 08:32:17,315 - INFO - User selected menu option: 1
+2026-03-28 08:33:01,635 - INFO - User selected menu option: 2
+2026-03-28 08:33:19,707 - INFO - User entered tag: recipes
+2026-03-28 08:33:29,036 - INFO - User selected menu option: 3
+2026-03-28 08:33:29,037 - INFO - Using tag: recipes (decoded: recipes)
+2026-03-28 08:33:29,038 - INFO - Fetching posts from https://blog.roses-crimea.ru with tag 'recipes'
+2026-03-28 08:33:29,579 - WARNING - Ошибка RSS: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 08:33:29,579 - WARNING - No posts found - trying without label as fallback
+2026-03-28 08:33:30,319 - WARNING - Ошибка RSS: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 08:33:30,320 - ERROR - Still no posts found after fallback attempt
+2026-03-28 08:38:23,006 - INFO - Scraper started
+2026-03-28 08:38:23,006 - ERROR - EOFError: No input available
+2026-03-28 08:38:23,007 - INFO - Scraper finished
+2026-03-28 08:49:11,296 - INFO - Scraper started
+2026-03-28 08:49:24,026 - INFO - User selected menu option: 1
+2026-03-28 08:49:41,954 - INFO - User selected menu option: 2
+2026-03-28 08:49:58,274 - INFO - User entered tag: recipes
+2026-03-28 08:50:05,114 - INFO - User selected menu option: 3
+2026-03-28 08:50:05,116 - INFO - Using tag: recipes (decoded: recipes)
+2026-03-28 08:50:05,116 - INFO - Fetching posts from https://blog.roses-crimea.ru with tag 'recipes'
+2026-03-28 08:50:05,117 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru?alt=rss&max-results=100&q=label:recipes
+2026-03-28 08:50:05,626 - WARNING - RSS parsing error: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 08:50:05,626 - WARNING - No posts found - trying without label as fallback
+2026-03-28 08:50:05,627 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru?alt=rss&max-results=100
+2026-03-28 08:50:06,124 - WARNING - RSS parsing error: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 08:50:06,124 - ERROR - Still no posts found after fallback attempt
+2026-03-28 08:50:34,781 - INFO - Scraper started
+2026-03-28 08:50:34,782 - ERROR - EOFError: No input available
+2026-03-28 08:50:34,782 - INFO - Scraper finished
+2026-03-28 09:32:37,833 - INFO - Scraper started
+2026-03-28 09:32:37,833 - ERROR - EOFError: No input available
+2026-03-28 09:32:37,833 - INFO - Scraper finished
+2026-03-28 09:34:10,975 - INFO - User selected menu option: 3
+2026-03-28 09:34:10,977 - INFO - Using tag: recipes (decoded: recipes)
+2026-03-28 09:34:10,978 - INFO - Fetching posts from https://blog.roses-crimea.ru with tag 'recipes'
+2026-03-28 09:34:10,978 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru?alt=rss&max-results=100&q=label:recipes
+2026-03-28 09:34:11,449 - WARNING - RSS parsing error: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 09:34:11,450 - WARNING - No posts found - trying without label as fallback
+2026-03-28 09:34:11,451 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru?alt=rss&max-results=100
+2026-03-28 09:34:11,911 - WARNING - RSS parsing error: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 09:34:11,912 - ERROR - Still no posts found after fallback attempt
+2026-03-28 09:34:21,480 - INFO - User selected menu option: 4
+2026-03-28 09:34:21,482 - INFO - User exited the program
+2026-03-28 09:34:21,483 - INFO - Scraper finished
+2026-03-28 09:34:27,870 - INFO - Scraper started
+2026-03-28 10:00:47,909 - INFO - User selected menu option: 1
+2026-03-28 10:00:57,197 - INFO - User selected menu option: 2
+2026-03-28 10:01:36,357 - INFO - User entered tag: China
+2026-03-28 10:01:39,932 - INFO - User selected menu option: 3
+2026-03-28 10:01:39,934 - INFO - Using tag: China (decoded: China)
+2026-03-28 10:01:39,935 - INFO - BloggerRSSFetcher init: base_url='https://blog.roses-crimea.ru'
+2026-03-28 10:01:39,936 - INFO - Using RSS feed URL: https://blog.roses-crimea.ru
+2026-03-28 10:01:39,936 - INFO - Fetching posts from https://blog.roses-crimea.ru with tag 'China'
+2026-03-28 10:01:39,937 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru?alt=rss&max-results=100&q=label:China
+2026-03-28 10:01:40,710 - WARNING - RSS parsing error: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 10:01:40,711 - WARNING - No posts found with the specified tag
+2026-03-28 10:05:37,156 - INFO - User selected menu option: 4
+2026-03-28 10:05:37,157 - INFO - User exited the program
+2026-03-28 10:05:37,157 - INFO - Scraper finished
+2026-03-28 10:38:14,518 - INFO - Scraper started
+2026-03-28 10:38:18,146 - INFO - User selected menu option: 1
+2026-03-28 10:39:13,657 - INFO - User selected menu option: 2
+2026-03-28 10:39:53,681 - INFO - User entered tag: ВИДЕОРЕЦЕПТ
+2026-03-28 10:39:58,753 - INFO - User selected menu option: 3
+2026-03-28 10:39:58,755 - INFO - Using tag: ВИДЕОРЕЦЕПТ (decoded: ВИДЕОРЕЦЕПТ)
+2026-03-28 10:39:58,756 - INFO - BloggerRSSFetcher init: base_url='https://blog.roses-crimea.ru/'
+2026-03-28 10:39:58,756 - INFO - Using RSS feed URL: https://blog.roses-crimea.ru
+2026-03-28 10:39:58,757 - INFO - Fetching posts from https://blog.roses-crimea.ru/ with tag 'ВИДЕОРЕЦЕПТ'
+2026-03-28 10:39:58,757 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru?alt=rss&max-results=100&q=label:%D0%92%D0%98%D0%94%D0%95%D0%9E%D0%A0%D0%95%D0%A6%D0%95%D0%9F%D0%A2
+2026-03-28 10:39:59,609 - WARNING - RSS parsing error: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 10:39:59,609 - WARNING - No posts found with the specified tag
+2026-03-28 10:45:55,224 - INFO - User selected menu option: 3
+2026-03-28 10:45:55,226 - INFO - Using tag: ВИДЕОРЕЦЕПТ (decoded: ВИДЕОРЕЦЕПТ)
+2026-03-28 10:45:55,227 - INFO - BloggerRSSFetcher init: base_url='https://blog.roses-crimea.ru/'
+2026-03-28 10:45:55,227 - INFO - Using RSS feed URL: https://blog.roses-crimea.ru
+2026-03-28 10:45:55,228 - INFO - Fetching posts from https://blog.roses-crimea.ru/ with tag 'ВИДЕОРЕЦЕПТ'
+2026-03-28 10:45:55,229 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru?alt=rss&max-results=100&q=label:%D0%92%D0%98%D0%94%D0%95%D0%9E%D0%A0%D0%95%D0%A6%D0%95%D0%9F%D0%A2
+2026-03-28 10:45:55,961 - WARNING - RSS parsing error: <unknown>:67:131: not well-formed (invalid token)
+2026-03-28 10:45:55,961 - WARNING - No posts found with the specified tag
+2026-03-28 10:50:45,248 - INFO - User selected menu option: 4
+2026-03-28 10:50:45,251 - INFO - User exited the program
+2026-03-28 10:50:45,252 - INFO - Scraper finished

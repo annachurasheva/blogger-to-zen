@@ -372,6 +372,8 @@ def main():
     
     parser = argparse.ArgumentParser(description='Сбор постов с Blogger')
     parser.add_argument('--label', '-l', help='Метка для тестового сбора (например, "Проект R")')
+    parser.add_argument('--max-results', '-m', type=int, default=50,
+                       help='Максимальное количество постов для сбора (по умолчанию 50)')
     args = parser.parse_args()
     
     print("=" * 60)
@@ -383,7 +385,7 @@ def main():
         pipeline = FirstStepPipeline()
         if args.label:
             # Тестовый режим: собираем только по одной указанной метке
-            posts = pipeline.run_test_step(label=args.label, max_results=2)
+            posts = pipeline.run_test_step(label=args.label, max_results=args.max_results)
             plan = []
         else:
             posts, plan = pipeline.run_first_step()

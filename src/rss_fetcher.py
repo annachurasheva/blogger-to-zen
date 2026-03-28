@@ -22,10 +22,13 @@ class BloggerRSSFetcher:
         """Получает посты из Blogger с поддержкой меток"""
         try:
             if label:
-                # Decode URL-encoded label if needed, then re-encode properly
-                decoded_label = unquote(label)
-                encoded_label = quote(decoded_label, safe='')
-                url = f"{self.base_url}?alt=rss&max-results={max_results}&q=label:{encoded_label}"
+                # Для меток с пробелами нужны кавычки в запросе
+                if ' ' in label:
+                    label_query = f'label:"{label}"'
+                else:
+                    label_query = f'label:{label}'
+                encoded_query = quote(label_query, safe='')
+                url = f"{self.base_url}?alt=rss&max-results={max_results}&q={encoded_query}"
             else:
                 url = f"{self.base_url}?alt=rss&max-results={max_results}"
 

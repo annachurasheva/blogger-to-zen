@@ -1,0 +1,53 @@
+2026-03-28 10:49:21,636 - INFO - Fetch All Posts script started
+2026-03-28 10:49:21,636 - ERROR - Unexpected error: EOF when reading a line
+2026-03-28 10:50:51,916 - INFO - Fetch All Posts script started
+2026-03-28 10:52:16,713 - INFO - BloggerRSSFetcher init: base_url='https://blog.roses-crimea.ru/'
+2026-03-28 10:52:16,714 - INFO - Using RSS feed base URL: https://blog.roses-crimea.ru/feeds/posts/default
+2026-03-28 10:52:16,715 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru/feeds/posts/default?alt=rss&max-results=10
+2026-03-28 10:52:17,735 - INFO - Получено 10 постов
+2026-03-28 10:52:17,736 - INFO - Site is accessible. Sample fetch returned 10 posts
+2026-03-28 10:53:42,545 - INFO - Created output directory: C:\Users\An\Documents\blogger-to-zen\blogger_roses_crimea\https__blog.roses-crimea.ru_
+2026-03-28 10:53:42,547 - INFO - Fetching all posts from https://blog.roses-crimea.ru/
+2026-03-28 10:53:42,547 - INFO - Fetching RSS URL: https://blog.roses-crimea.ru/feeds/posts/default?alt=rss&max-results=500
+2026-03-28 10:53:44,641 - INFO - Получено 125 постов
+2026-03-28 10:53:44,641 - INFO - Fetched 125 posts
+2026-03-28 10:53:44,657 - INFO - Generated MD file: C:\Users\An\Documents\blogger-to-zen\blogger_roses_crimea\https__blog.roses-crimea.ru_\all_posts.md
+2026-03-28 10:53:44,678 - INFO - Generated JSON file: C:\Users\An\Documents\blogger-to-zen\blogger_roses_crimea\https__blog.roses-crimea.ru_\all_posts.json
+2026-03-28 11:17:27,255 - INFO - BloggerRSSFetcher init: base_url='https://roses-fragrant.blogspot.com/'
+2026-03-28 11:17:27,257 - INFO - Using RSS feed base URL: https://roses-fragrant.blogspot.com/feeds/posts/default
+2026-03-28 11:17:27,257 - INFO - Fetching RSS URL: https://roses-fragrant.blogspot.com/feeds/posts/default?alt=rss&max-results=10
+2026-03-28 11:17:28,038 - INFO - Получено 10 постов
+2026-03-28 11:17:28,038 - INFO - Site is accessible. Sample fetch returned 10 posts
+2026-03-28 11:18:59,375 - INFO - Created output directory: C:\Users\An\Documents\blogger-to-zen\download\https__roses-fragrant.blogspot.com_
+2026-03-28 11:18:59,375 - INFO - Fetching all posts from https://roses-fragrant.blogspot.com/
+2026-03-28 11:18:59,376 - INFO - Fetching RSS URL: https://roses-fragrant.blogspot.com/feeds/posts/default?alt=rss&max-results=500
+2026-03-28 11:19:00,440 - INFO - Получено 39 постов
+2026-03-28 11:19:00,440 - INFO - Fetched 39 posts
+2026-03-28 11:19:00,450 - INFO - Generated MD file: C:\Users\An\Documents\blogger-to-zen\download\https__roses-fragrant.blogspot.com_\all_posts.md
+2026-03-28 11:19:00,459 - INFO - Generated JSON file: C:\Users\An\Documents\blogger-to-zen\download\https__roses-fragrant.blogspot.com_\all_posts.json
+2026-03-28 12:31:36,974 - INFO - BloggerRSSFetcher init: base_url='https://crimeanblog.blogspot.com/'
+2026-03-28 12:31:37,040 - INFO - Using RSS feed base URL: https://crimeanblog.blogspot.com/feeds/posts/default
+2026-03-28 12:31:37,047 - INFO - Fetching RSS URL: https://crimeanblog.blogspot.com/feeds/posts/default?alt=rss&max-results=10
+2026-03-28 12:31:56,830 - WARNING - RSS parsing error: <urlopen error [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера>
+2026-03-28 12:31:56,833 - WARNING - Site returned no posts in sample fetch
+2026-03-28 12:33:13,751 - INFO - Created output directory: C:\Users\An\Documents\blogger-to-zen\download\https__crimeanblog.blogspot.com_
+2026-03-28 12:33:13,753 - INFO - Fetching all posts from https://crimeanblog.blogspot.com/
+2026-03-28 12:33:13,753 - INFO - Fetching RSS URL: https://crimeanblog.blogspot.com/feeds/posts/default?alt=rss&max-results=500
+2026-03-28 12:33:33,090 - WARNING - RSS parsing error: <urlopen error [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера>
+2026-03-28 12:33:33,092 - INFO - Fetched 0 posts
+2026-03-28 12:34:12,065 - INFO - BloggerRSSFetcher init: base_url='https://crimeanblog.blogspot.com/'
+2026-03-28 12:34:12,070 - INFO - Using RSS feed base URL: https://crimeanblog.blogspot.com/feeds/posts/default
+2026-03-28 12:34:12,070 - INFO - Fetching RSS URL: https://crimeanblog.blogspot.com/feeds/posts/default?alt=rss&max-results=10
+2026-03-28 12:34:33,922 - WARNING - RSS parsing error: <urlopen error [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера>
+2026-03-28 12:34:33,924 - WARNING - Site returned no posts in sample fetch
+2026-03-28 12:34:47,194 - INFO - Created output directory: C:\Users\An\Documents\blogger-to-zen\download\https__crimeanblog.blogspot.com_
+2026-03-28 12:34:47,201 - INFO - Fetching all posts from https://crimeanblog.blogspot.com/
+2026-03-28 12:34:47,202 - INFO - Fetching RSS URL: https://crimeanblog.blogspot.com/feeds/posts/default?alt=rss&max-results=500
+2026-03-28 12:35:06,572 - WARNING - RSS parsing error: <urlopen error [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера>
+2026-03-28 12:35:06,573 - INFO - Fetched 0 posts
+2026-03-28 20:30:13,255 - INFO - Fetch All Posts script started
+2026-03-28 20:30:33,939 - INFO - BloggerRSSFetcher init: base_url='https://crimeanblog.blogspot.com'
+2026-03-28 20:30:33,940 - INFO - Using RSS feed base URL: https://crimeanblog.blogspot.com/feeds/posts/default
+2026-03-28 20:30:33,940 - INFO - Fetching RSS URL: https://crimeanblog.blogspot.com/feeds/posts/default?alt=rss&max-results=10
+2026-03-28 20:30:53,422 - WARNING - RSS parsing error: <urlopen error [WinError 10060] Попытка установить соединение была безуспешной, т.к. от другого компьютера за требуемое время не получен нужный отклик, или было разорвано уже установленное соединение из-за неверного отклика уже подключенного компьютера>
+2026-03-28 20:30:53,423 - WARNING - Site returned no posts in sample fetch
