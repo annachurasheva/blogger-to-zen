@@ -12,27 +12,25 @@ import json
 import logging
 from datetime import datetime
 from urllib.parse import urlparse
-from .rss_fetcher import BloggerRSSFetcher
+try:
+    from .rss_fetcher import BloggerRSSFetcher
+except ImportError:
+    # Для прямого запуска скрипта
+    from rss_fetcher import BloggerRSSFetcher
 
-# --- БЛОК 2: Новый импорт и настройка (ВСТАВИТЬ СЮДА) ---
-import html2text
-
-# Создаем объект конвертера (это "контейнер" с настройками)
-h = html2text.HTML2Text()
-
-# Настраиваем его для сохранения структуры Markdown
-h.ignore_links = False  # Сохраняем ссылки [текст](url)
-h.ignore_images = False # Сохраняем изображения ![alt](url)
-h.body_width = 0        # Не переносим строки по ширине (оставляем как есть)
-h.unicode_snob = True   # Корректно сохраняем русские символы и кавычки
+# --- БЛОК 2: Импорт markdownify для качественной конвертации HTML в Markdown ---
+from markdownify import markdownify as md
 
 
 # --- НАЧАЛО БЛОКА КОНСТАНТ (МЕНЯЙТЕ ЗДЕСЬ) ---
-# 1. URL вашего блога
+# 1. URL вашего блога (используйте URL вашего блога на Blogger)
+# Примеры:
+#   - https://blog.roses-crimea.ru
+#   - https://crimeanblog.blogspot.com
 BLOG_URL = "https://crimeanblog.blogspot.com"
 
 # 2. Год, за который нужно собрать посты
-TARGET_YEAR = 2009
+TARGET_YEAR = 2007
 
 # 3. Папка, куда сохранять результат (создастся автоматически)
 OUTPUT_FOLDER = f"posts_{TARGET_YEAR}"
@@ -60,8 +58,9 @@ logger = logging.getLogger(__name__)
 def validate_blog_url(url):
     """Проверяет, что URL блога указан верно."""
     parsed = urlparse(url)
-    if not parsed.netloc or "blogger.com" not in parsed.netloc:
-        logger.error(f"Ошибка: '{url}' не выглядит как адрес блога на Blogger.")
+    # Простая проверка: URL должен быть валидным и начинаться с http/https
+    if not parsed.netloc or not parsed.scheme:
+        logger.error(f"Ошибка: '{url}' не является валидным URL.")
         return False
     return True
 
@@ -144,8 +143,9 @@ labels: {labels}
 ---
 """
 
-    # Конвертируем HTML контент в Markdown
-    content_md = h.handle(content_html) if content_html else ''
+    # Конвертируем HTML контент в Markdown с помощью markdownify
+    # markdownify лучше сохраняет структуру и подходит для HUGO
+    content_md = md(content_html) if content_html else ''
     
     try:
         with open(filepath, "w", encoding="utf-8") as f:
@@ -215,48 +215,53 @@ def save_post_to_json(entry, output_path):
 
 def main():
     """Точка входа в программу."""
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='Сбор постов Blogger за год')
+    parser.add_argument('--url', default=BLOG_URL, help='URL блога (по умолчанию: из константы)')
+    parser.add_argument('--year', type=int, default=TARGET_YEAR, help='Год для сбора (по умолчанию: из константы)')
+    parser.add_argument('--output', default=OUTPUT_FOLDER, help='Папка для сохранения (по умолчанию: из константы)')
+    args = parser.parse_args()
     
     # 1. Валидация URL
-    if not validate_blog_url(BLOG_URL):
+    if not validate_blog_url(args.url):
         return
 
     # 2. Создание объекта для работы с RSS
-    # BloggerRSSFetcher сам преобразует URL в правильный RSS feed URL
-    fetcher = BloggerRSSFetcher(BLOG_URL)
+    fetcher = BloggerRSSFetcher(args.url)
 
     # 3. Сбор постов за указанный год
     # Сначала получаем все посты (или много), затем фильтруем по году
-    # Для сбора всех постов используем большой max_results
     all_posts = fetcher.fetch_posts(label=None, max_results=500)
     
     # Фильтруем посты по году
     posts = []
     for post in all_posts:
         published = post.get('published', '')
-        if published and published.startswith(str(TARGET_YEAR)):
+        if published and published.startswith(str(args.year)):
             posts.append(post)
     
     if not posts:
-        logger.warning("Постов для сохранения не найдено.")
+        logger.warning(f"Постов за {args.year} год для сохранения не найдено.")
         return
 
     # 4. Создание папки для результатов
-    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+    os.makedirs(args.output, exist_ok=True)
     
     # 5. Сохранение файлов для каждого поста
     md_count = 0
     json_count = 0
 
     for post in posts:
-        if save_post_to_md(post, OUTPUT_FOLDER):
+        if save_post_to_md(post, args.output):
             md_count += 1
         
-        if save_post_to_json(post, OUTPUT_FOLDER):
+        if save_post_to_json(post, args.output):
             json_count += 1
 
     # 6. Итоговый отчет
     logger.info("\n=== ЗАВЕРШЕНИЕ ===")
-    logger.info(f"Папка с результатами: {os.path.abspath(OUTPUT_FOLDER)}")
+    logger.info(f"Папка с результатами: {os.path.abspath(args.output)}")
     logger.info(f"Сохранено .md файлов: {md_count}")
     logger.info(f"Сохранено .json файлов: {json_count}")
 
