@@ -12,7 +12,7 @@ import json
 import logging
 from datetime import datetime
 from urllib.parse import urlparse
-from rss_fetcher import BloggerRSSFetcher # Предполагается, что этот класс у вас уже есть
+from .rss_fetcher import BloggerRSSFetcher
 
 # --- БЛОК 2: Новый импорт и настройка (ВСТАВИТЬ СЮДА) ---
 import html2text
@@ -66,89 +66,90 @@ def validate_blog_url(url):
     return True
 
 
-def fetch_posts_for_year(fetcher, year, posts_per_page):
+def fetch_posts_for_year(fetcher, year, max_results=50):
     """
     Основная функция сбора.
-    Использует пагинацию RSS-ленты, чтобы забрать все посты за год.
+    Собирает все посты за указанный год с помощью фильтра по дате.
     """
-    all_posts = []
-    start_index = 1
     year_str = str(year)
-
+    
     logger.info(f"Начинаем сбор постов за {year} год...")
-
-    while True:
-        # Формируем URL с фильтром по дате и пагинацией
-        rss_url = (
-            f"{fetcher.base_url}/feeds/posts/default?"
-            f"published-min={year_str}-01-01T00:00:00&"
-            f"published-max={year_str}-12-31T23:59:59&"
-            f"start-index={start_index}&"
-            f"max-results={posts_per_page}"
-        )
-
-        feed = fetcher.parse_feed(rss_url)
-        entries = feed.entries
-
-        if not entries:
-            # Нет больше постов, выходим из цикла
-            break
-
-        logger.debug(f"Получена страница. Постов на странице: {len(entries)}")
-        all_posts.extend(entries)
-
-        # Проверяем, есть ли следующая страница
-        # Если постов меньше, чем запрошено max-results, это последняя страница
-        if len(entries) < posts_per_page:
-            logger.info("Достигнут конец списка постов.")
-            break
-
-        start_index += posts_per_page
-
-    logger.info(f"Сбор завершен. Найдено постов за {year} год: {len(all_posts)}")
-    return all_posts
+    
+    # Используем метод fetch_posts с фильтром по дате через параметр q
+    # Формируем запрос: published:YYYY или published:YYYY-MM-DD
+    # Для RSS Blogger используем published-min и published-max
+    posts = fetcher.fetch_posts(
+        label=None,
+        max_results=max_results
+    )
+    
+    # Фильтруем посты по году
+    filtered_posts = []
+    for post in posts:
+        published = post.get('published', '')
+        if published and published.startswith(year_str):
+            filtered_posts.append(post)
+    
+    logger.info(f"Сбор завершен. Найдено постов за {year} год: {len(filtered_posts)}")
+    return filtered_posts
 
 
 def save_post_to_md(entry, output_path):
     """
     Сохраняет один пост в файл .md с YAML-frontmatter.
     """
+    # Получаем данные поста
+    title = entry.get('title', 'Без названия')
+    published = entry.get('published', '')
+    author = entry.get('author', '')
+    link = entry.get('link', '')
+    post_id = entry.get('id', '')
+    
     # Получаем дату для имени файла
-    date_str = entry.published[:10] # 'YYYY-MM-DD'
+    date_str = published[:10] if published else 'unknown'
     
     # Чистим заголовок для имени файла (удаляем запрещенные символы)
-    title_clean = re.sub(r'[\\/*?:"<>|]', "", entry.title).strip()
+    title_clean = re.sub(r'[\\/*?:"<>|]', "", title).strip()
     
     filename = f"{date_str}-{title_clean}.md"
     filepath = os.path.join(output_path, filename)
 
     # Извлекаем контент (полный текст или summary)
-    content_html = getattr(entry, "content", [{}])[0].get("value") or entry.summary
+    content_html = ''
+    if 'content' in entry and entry.content:
+        for content in entry.content:
+            if content.value:
+                content_html = content.value
+                break
+    if not content_html:
+        content_html = entry.get('summary', '')
 
-    # Извлекаем метки (labels) из тегов <category>
+    # Извлекаем метки (labels) из тегов
     labels = []
     for cat in entry.get('tags', []):
-        if 'blogger.com/atom/ns#' in cat.get('scheme', ''):
+        # Проверяем, что это метка Blogger
+        if isinstance(cat, dict) and 'blogger.com/atom/ns#' in cat.get('scheme', ''):
+            labels.append(cat.get('term', ''))
+        elif hasattr(cat, 'term'):
             labels.append(cat.term)
 
     # Формируем YAML Front Matter
     frontmatter = f"""---
-title: "{entry.title}"
-date: {entry.published}
-author: {entry.author}
-link: {entry.link}
-id: {entry.id}
-labels: {labels} # Список меток поста
+title: "{title}"
+date: {published}
+author: {author}
+link: {link}
+id: {post_id}
+labels: {labels}
 ---
 """
 
-    # Конвертируем HTML контент в простой текст (или используем markdownify для лучшей конвертации)
-    # Здесь используем простой парсинг для примера, но лучше установить библиотеку html2text или markdownify
-    content_md = h.handle(content_html)
+    # Конвертируем HTML контент в Markdown
+    content_md = h.handle(content_html) if content_html else ''
     
     try:
         with open(filepath, "w", encoding="utf-8") as f:
-            f.write(frontmatter + "\n" + content_text)
+            f.write(frontmatter + "\n" + content_md)
         logger.debug(f"Сохранен MD файл: {filename}")
         return True
     except Exception as e:
@@ -160,21 +161,46 @@ def save_post_to_json(entry, output_path):
     """
     Сохраняет данные одного поста в файл .json.
     """
-    date_str = entry.published[:10]
-    title_clean = re.sub(r'[\\/*?:"<>|]', "", entry.title).strip()
+    # Получаем данные поста
+    title = entry.get('title', 'Без названия')
+    published = entry.get('published', '')
+    author = entry.get('author', '')
+    link = entry.get('link', '')
+    post_id = entry.get('id', '')
+    
+    date_str = published[:10] if published else 'unknown'
+    title_clean = re.sub(r'[\\/*?:"<>|]', "", title).strip()
     
     filename = f"{date_str}-{title_clean}.json"
     filepath = os.path.join(output_path, filename)
 
-    # Создаем словарь с данными поста для сохранения в JSON
+    # Извлекаем контент
+    content_html = ''
+    if 'content' in entry and entry.content:
+        for content in entry.content:
+            if content.value:
+                content_html = content.value
+                break
+    if not content_html:
+        content_html = entry.get('summary', '')
+
+    # Извлекаем метки
+    labels = []
+    for cat in entry.get('tags', []):
+        if isinstance(cat, dict) and 'blogger.com/atom/ns#' in cat.get('scheme', ''):
+            labels.append(cat.get('term', ''))
+        elif hasattr(cat, 'term'):
+            labels.append(cat.term)
+
+    # Создаем словарь с данными поста
     post_data = {
-        "title": entry.title,
-        "published": entry.published,
-        "author": entry.author,
-        "link": entry.link,
-        "id": entry.id,
-        "content": getattr(entry, "content", [{}])[0].get("value") or entry.summary,
-        "labels": [cat.term for cat in entry.get('tags', []) if 'blogger.com/atom/ns#' in cat.get('scheme', '')]
+        "title": title,
+        "published": published,
+        "author": author,
+        "link": link,
+        "id": post_id,
+        "content": content_html,
+        "labels": labels
     }
 
     try:
@@ -195,10 +221,20 @@ def main():
         return
 
     # 2. Создание объекта для работы с RSS
+    # BloggerRSSFetcher сам преобразует URL в правильный RSS feed URL
     fetcher = BloggerRSSFetcher(BLOG_URL)
 
     # 3. Сбор постов за указанный год
-    posts = fetch_posts_for_year(fetcher, TARGET_YEAR, POSTS_PER_PAGE)
+    # Сначала получаем все посты (или много), затем фильтруем по году
+    # Для сбора всех постов используем большой max_results
+    all_posts = fetcher.fetch_posts(label=None, max_results=500)
+    
+    # Фильтруем посты по году
+    posts = []
+    for post in all_posts:
+        published = post.get('published', '')
+        if published and published.startswith(str(TARGET_YEAR)):
+            posts.append(post)
     
     if not posts:
         logger.warning("Постов для сохранения не найдено.")
