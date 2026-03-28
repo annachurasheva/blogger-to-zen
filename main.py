@@ -122,7 +122,7 @@ class FirstStepPipeline:
         
         return all_medical_posts, publication_plan
     
-    def run_test_step(self, label, max_results=2):
+    def run_test_step(self, label, max_results=50):
         """Тестовый запуск: сбор постов по одной указанной метке"""
         logger.info("=" * 60)
         logger.info(f"ТЕСТОВЫЙ ЗАПУСК: метка '{label}'")
@@ -130,7 +130,7 @@ class FirstStepPipeline:
         
         all_posts = []
         
-        logger.info(f"🔍 Ищем посты с меткой '{label}'")
+        logger.info(f"🔍 Ищем посты с меткой '{label}' (до {max_results} постов)")
         
         posts = self.fetcher.fetch_posts(label=label, max_results=max_results)
         
@@ -158,15 +158,19 @@ class FirstStepPipeline:
             logger.info(f"  ✅ {processed['title'][:50]}...")
             logger.info(f"     Цель: {processed['purpose']}")
         
+        # Создаем папку для метки
+        label_dir = os.path.join('output_samples', label)
+        os.makedirs(label_dir, exist_ok=True)
+        
         # Сохраняем результат тестового сбора
-        test_file = os.path.join('output_samples', f'test_{label}_{datetime.now().strftime("%Y%m%d_%H%M")}.json')
+        test_file = os.path.join(label_dir, f'posts_{datetime.now().strftime("%Y%m%d_%H%M")}.json')
         with open(test_file, 'w', encoding='utf-8') as f:
             json.dump(all_posts, f, ensure_ascii=False, indent=2)
         logger.info(f"💾 Тестовые посты сохранены: {test_file}")
         
         # Создаём простой HTML для просмотра
         html_content = self._generate_html_preview(all_posts)
-        html_file = os.path.join('output_samples', f'test_{label}_{datetime.now().strftime("%Y%m%d_%H%M")}.html')
+        html_file = os.path.join(label_dir, f'preview_{datetime.now().strftime("%Y%m%d_%H%M")}.html')
         with open(html_file, 'w', encoding='utf-8') as f:
             f.write(html_content)
         logger.info(f"👁️  Визуальный просмотр: {html_file}")
